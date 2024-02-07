@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://crcefrmpprgmr"]
+
+[ext_resource type="Script" path="res://Scripts/Entities/Entity/Entity.gd" id="1_qyw3f"]
+[ext_resource type="Texture2D" uid="uid://bfrtj3tqkv0s4" path="res://Textures/Playfield/TrapEntity.png" id="2_gfttx"]
+
+[node name="Wall" type="Node2D"]
+script = ExtResource("1_qyw3f")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_gfttx")

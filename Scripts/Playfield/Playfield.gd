@@ -5,7 +5,7 @@ var tileScene = preload("res://Scenes/Playfield/Tile.tscn")
 var wallEntityScene = preload("res://Scenes/Entities/Obstacle/WallEntity.tscn")
 
 var cellSize: Vector2i = Vector2i(18, 18)
-var size: Vector2i = Vector2i(5, 5)
+var size: Vector2i = Vector2i(10, 6)
 
 var tiles = {}
 
