@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ii4b52s7wtd6"]
+
+[ext_resource type="Script" path="res://Scripts/Entities/Entity/Entity.gd" id="1_vyqcn"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c02s8"]
+
+[node name="Entity" type="Node"]
+script = ExtResource("1_vyqcn")
+
+[node name="Animations" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_c02s8")
