@@ -1,6 +1,9 @@
 extends Node
 
+var trapScene = preload("res://Scenes/Entities/Obstacle/TrapEntity.tscn")
+
 @export var label: RichTextLabel
+@export var playfield: Playfield
 
 enum Actions {
 	NONE,
@@ -22,8 +25,9 @@ func handleSpawnTrapButtonClick():
 	currentAction = Actions.SPAWN_TRAP
 	label.text = "Spawn Trap"
 
-func handlePlayfieldTileClick(_index: int, pos: Vector2i):
-	if currentAction == Actions.NONE:
+func handlePlayfieldTileClick(tile: Tile):
+	if currentAction == Actions.NONE || tile == null: 
 		return
 		
-	print("Spawn trap")
+	var trap = trapScene.instantiate()
+	tile.appendEntity(trap)

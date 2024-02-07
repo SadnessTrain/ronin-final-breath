@@ -26,3 +26,10 @@ func _ready():
 func CreateWall(tile: Tile):
 	var wall: Entity = wallEntityScene.instantiate()
 	tile.appendEntity(wall)
+	
+func GetTileByPos(pos: Vector2) -> Tile:
+	if !tiles.has(pos):
+		printerr("Cannot find tile on provided position")
+		return null
+		
+	return tiles[pos]

@@ -1,5 +1,5 @@
 extends Node
 
-signal PlayfieldTileClickSignal(index: int, pos: Vector2i)
+signal PlayfieldTileClickSignal(tile: Tile)
 
 signal AttackSignal(sourceEntity:Entity, targetEntity:Entity, attack:Attack)

@@ -35,7 +35,7 @@ func handleMouseExited():
 
 func _physics_process(_delta: float):
 	if isHovered && Input.is_action_just_pressed("LeftMouse"):
-		GlobalSignals.PlayfieldTileClickSignal.emit(index, pos)
+		GlobalSignals.PlayfieldTileClickSignal.emit(self)
 
 func appendEntity(entity: Entity):
 	entity.position = Vector2.ZERO
