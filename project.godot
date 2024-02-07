@@ -15,6 +15,10 @@ run/main_scene="res://Scenes/Playfield/Playfield.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Utils="*res://Scripts/Autoload/UtilsAutoload.gd"
+
 [display]
 
 window/size/viewport_width=640

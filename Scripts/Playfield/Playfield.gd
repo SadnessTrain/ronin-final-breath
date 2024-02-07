@@ -13,7 +13,7 @@ func _ready():
 		for y in range(0, size.y):
 			var pos = Vector2i(x, y)
 			var tile: Tile = tileScene.instantiate()
-			tile.createTile(x + y, pos, self)
+			tile.createTile(x + y, pos, self, Utils.randomInt(0, 10) >= 9)
 			add_child(tile)
 			
 			tiles[pos] = tile

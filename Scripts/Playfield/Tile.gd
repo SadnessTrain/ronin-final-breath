@@ -1,5 +1,7 @@
-extends Sprite2D
+extends Area2D
 class_name Tile
+
+@export var sprite: Sprite2D
 
 var groundTexture: Texture2D = preload("res://Textures/Playfield/GroundTexture.png")
 var obstacleTexture: Texture2D = preload("res://Textures/Playfield/ObstacleTexture.png")
@@ -18,13 +20,24 @@ func createTile(index: int, pos: Vector2i, playfield: Playfield, isObstacle = fa
 	self.playfield = playfield
 	setPosition()
 	setTexture()
+	subscribeSignals()
 
 func setPosition():
 	global_position = Vector2(pos.x * playfield.cellSize.x, pos.y * playfield.cellSize.y)
 
 func setTexture():
 	if isObstacle:
-		texture = obstacleTexture
+		sprite.texture = obstacleTexture
 		return
 		
-	texture = groundTexture
+	sprite.texture = groundTexture
+
+func subscribeSignals():
+	mouse_entered.connect(handleMouseEntered)
+	mouse_exited.connect(handleMouseExited)
+	
+func handleMouseEntered():
+	modulate = Color("#424242")
+	
+func handleMouseExited():
+	modulate = Color("#ffffff")
