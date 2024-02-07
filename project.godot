@@ -12,8 +12,13 @@ config_version=5
 
 config/name="Ronin: Final Breath"
 run/main_scene="res://Scenes/Playfield/Playfield.tscn"
+run/main_scene="res://entity.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GlobalSignals="*res://Autoload/GlobalSignals.gd"
 
 [autoload]
 
