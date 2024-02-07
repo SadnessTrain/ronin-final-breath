@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://lvsl4hg5b1jr"]
+[gd_scene load_steps=4 format=3 uid="uid://lvsl4hg5b1jr"]
 
 [ext_resource type="Script" path="res://Scripts/Playfield/Tile.gd" id="1_ohxan"]
+[ext_resource type="Texture2D" uid="uid://br70522rf0c2p" path="res://Textures/Playfield/GroundTexture.png" id="2_680is"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lq7g6"]
 size = Vector2(18, 18)
@@ -10,6 +11,7 @@ script = ExtResource("1_ohxan")
 sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_680is")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_lq7g6")
