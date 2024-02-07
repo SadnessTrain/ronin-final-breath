@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Ronin: Final Breath"
+run/main_scene="res://Scenes/Playfield/Playfield.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
