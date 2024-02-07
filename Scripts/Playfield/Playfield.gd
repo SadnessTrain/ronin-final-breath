@@ -33,3 +33,30 @@ func GetTileByPos(pos: Vector2) -> Tile:
 		return null
 		
 	return tiles[pos]
+
+func GetAllEmptyTiles() -> Array[Tile]:
+	var toReturn: Array[Tile] = []
+	for key in tiles:
+		var tile: Tile = tiles[key]
+
+		if tile.entities.size() <= 0:
+			toReturn.append(tile)
+		
+	return toReturn
+
+func SetPossibleTilesHighlightingByTilesPos(tilesPos: Array[Vector2i], isActive: bool):
+	for tilePos in tilesPos:
+		var tile = GetTileByPos(tilePos)
+		if !tile:
+			return
+			
+		tile.enableTileHighlighting() if isActive else tile.disableTileHighlighting()
+
+func SetPossibleTilesHighlightingByTilesObj(tiles: Array[Tile], isActive: bool):
+	for tile in tiles:
+		tile.enableTileHighlighting() if isActive else tile.disableTileHighlighting()
+		
+func DisableAllTilesHighlighting():
+	for key in tiles:
+		var tile: Tile = tiles[key]
+		tile.disableTileHighlighting()

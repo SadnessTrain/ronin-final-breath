@@ -8,6 +8,7 @@ var index: int
 var pos: Vector2i
 var entities: Array[Entity] 
 var isHovered: bool
+var lastColor: Color
 
 func createTile(index: int, pos: Vector2i, playfield: Playfield, isObstacle = false):
 	self.index = index
@@ -15,6 +16,7 @@ func createTile(index: int, pos: Vector2i, playfield: Playfield, isObstacle = fa
 	self.entities = []
 	self.playfield = playfield
 	isHovered = false
+	lastColor = Color("#ffffff")
 	setPosition()
 	subscribeSignals()
 
@@ -26,12 +28,16 @@ func subscribeSignals():
 	mouse_exited.connect(handleMouseExited)
 	
 func handleMouseEntered():
-	modulate = Color("#424242")
+	changeColor(Color("#424242"))
 	isHovered = true
 	
 func handleMouseExited():
-	modulate = Color("#ffffff")
+	changeColor(lastColor)
 	isHovered = false
+
+func changeColor(color: Color):
+	lastColor = modulate
+	modulate = color 
 
 func _physics_process(_delta: float):
 	if isHovered && Input.is_action_just_pressed("LeftMouse"):
@@ -41,3 +47,17 @@ func appendEntity(entity: Entity):
 	entity.position = Vector2.ZERO
 	add_child(entity)
 	entities.push_back(entity)
+	
+func enableTileHighlighting():
+	changeColor(Color("#2c9e32"))
+	
+func disableTileHighlighting():
+	changeColor(Color("#ffffff"))
+	lastColor = Color("#ffffff")
+	
+func CheckIfHasWall():
+	for entity in entities:
+		if entity is WallEntity:
+			return true
+
+	return false

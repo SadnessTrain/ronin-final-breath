@@ -29,8 +29,9 @@ text = "None"
 position = Vector2(78, 65)
 zoom = Vector2(2, 2)
 
-[node name="TestingManager" type="Node" parent="." node_paths=PackedStringArray("label")]
+[node name="TestingManager" type="Node" parent="." node_paths=PackedStringArray("label", "playfield")]
 script = ExtResource("2_k4mih")
 label = NodePath("../CanvasLayer/RichTextLabel")
+playfield = NodePath("../Playfield")
 
 [connection signal="pressed" from="CanvasLayer/SpawnTrap" to="TestingManager" method="handleSpawnTrapButtonClick"]

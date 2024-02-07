@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://baqocf3yu76nu"]
 
-[ext_resource type="Script" path="res://Scripts/Entities/Entity/Entity.gd" id="1_s2gfb"]
+[ext_resource type="Script" path="res://Scripts/Entities/Obstacle/WallEntity.gd" id="1_jwue0"]
 [ext_resource type="Texture2D" uid="uid://c6ii2umkmseqb" path="res://Textures/Playfield/ObstacleTexture.png" id="2_2t01d"]
 
 [node name="Wall" type="Node2D"]
-script = ExtResource("1_s2gfb")
+script = ExtResource("1_jwue0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_2t01d")

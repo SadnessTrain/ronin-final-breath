@@ -20,14 +20,18 @@ func handleSpawnTrapButtonClick():
 	if currentAction == Actions.SPAWN_TRAP:
 		currentAction = Actions.NONE
 		label.text = "NONE"
+		playfield.DisableAllTilesHighlighting()
 		return
 		
 	currentAction = Actions.SPAWN_TRAP
 	label.text = "Spawn Trap"
+	var possibleTiles = playfield.GetAllEmptyTiles()
+	playfield.SetPossibleTilesHighlightingByTilesObj(possibleTiles, true)
 
 func handlePlayfieldTileClick(tile: Tile):
-	if currentAction == Actions.NONE || tile == null: 
+	if currentAction == Actions.NONE || tile == null || tile.CheckIfHasWall(): 
 		return
 		
 	var trap = trapScene.instantiate()
 	tile.appendEntity(trap)
+	tile.disableTileHighlighting()
