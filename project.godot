@@ -12,17 +12,13 @@ config_version=5
 
 config/name="Ronin: Final Breath"
 run/main_scene="res://Scenes/Playfield/Playfield.tscn"
-run/main_scene="res://entity.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
 [autoload]
 
-GlobalSignals="*res://Autoload/GlobalSignals.gd"
-
-[autoload]
-
 Utils="*res://Scripts/Autoload/UtilsAutoload.gd"
+GlobalSignals="*res://Autoload/GlobalSignals.gd"
 
 [display]
 
@@ -35,6 +31,14 @@ window/stretch/scale_mode="integer"
 
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
+
+[input]
+
+LeftMouse={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(168, 17),"global_position":Vector2(172, 58),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
 
 [input_devices]
 

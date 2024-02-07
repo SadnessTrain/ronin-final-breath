@@ -11,6 +11,7 @@ var index: int
 var pos: Vector2i
 var entities: Array[Node2D] #TODO Change Node2D type
 var isObstacle: bool
+var isHovered: bool
 
 func createTile(index: int, pos: Vector2i, playfield: Playfield, isObstacle = false):
 	self.index = index
@@ -18,6 +19,7 @@ func createTile(index: int, pos: Vector2i, playfield: Playfield, isObstacle = fa
 	self.entities = []
 	self.isObstacle = isObstacle
 	self.playfield = playfield
+	isHovered = false
 	setPosition()
 	setTexture()
 	subscribeSignals()
@@ -38,6 +40,12 @@ func subscribeSignals():
 	
 func handleMouseEntered():
 	modulate = Color("#424242")
+	isHovered = true
 	
 func handleMouseExited():
 	modulate = Color("#ffffff")
+	isHovered = false
+
+func _physics_process(_delta: float):
+	if isHovered && Input.is_action_just_pressed("LeftMouse"):
+		GlobalSignals.PlayfieldTileClickSignal.emit(index, pos)

@@ -18,7 +18,7 @@ var charismaProgress : float = 0
 var willpowerProgress : float = 0
 
 func _ready():
-	GlobalSignals.AttackSignal.connect(RecieveAttack())
+	GlobalSignals.AttackSignal.connect(RecieveAttack)
 
 func Attack(target:Vector2, attack:Attack):
 	pass
