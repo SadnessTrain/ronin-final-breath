@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://gi3buqt3j3t3"]
+
+[ext_resource type="Script" path="res://Scripts/Entities/LivingEntity/LivingEntity.gd" id="1_jhr3c"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8e4rk"]
+
+[node name="LivingEntity" type="Node"]
+script = ExtResource("1_jhr3c")
+
+[node name="Abilities" type="Node" parent="."]
+
+[node name="Items" type="Node" parent="."]
+
+[node name="Skills" type="Node" parent="."]
+
+[node name="Stats" type="Node" parent="."]
+
+[node name="Weapons" type="Node" parent="."]
+
+[node name="Animations" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_8e4rk")

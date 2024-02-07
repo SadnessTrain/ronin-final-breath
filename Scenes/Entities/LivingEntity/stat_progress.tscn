@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://mmf12mqj4kte"]
+
+[ext_resource type="Script" path="res://Scripts/Entities/LivingEntity/StatProgress.gd" id="1_wxi3t"]
+
+[node name="StatProgress" type="Node"]
+script = ExtResource("1_wxi3t")

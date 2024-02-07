@@ -8,7 +8,7 @@ var effect : Callable
 
 enum AttackType{
 	HORIZONTAL,
-	VERTICAL,
+	OVERHEAD,
 	THRUST
 }
 
@@ -17,3 +17,6 @@ enum Priority{
 	STANDARD,
 	HIGH
 }
+
+func _init(type:AttackType, damage:int, priority:Priority=Priority.STANDARD, effect:Callable=func():pass):
+	pass
