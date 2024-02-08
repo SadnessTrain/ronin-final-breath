@@ -33,12 +33,15 @@ func handlePlayfieldTileClick(tile: Tile):
 	if currentAction == Actions.NONE || tile == null || tile.CheckIfHasWall(): 
 		return
 		
-	if currentAction == Actions.MOVE:
-		pass
+	if currentAction == Actions.SPAWN_TRAP:
+		var trap = trapScene.instantiate()
+		tile.appendEntity(trap)
+		tile.disableTileHighlighting()
 		
-	var trap = trapScene.instantiate()
-	tile.appendEntity(trap)
-	tile.disableTileHighlighting()
+	if currentAction == Actions.MOVE:
+		currentAction = Actions.NONE
+		label.text = "NONE"
+		playfield.DisableAllTilesHighlighting()
 
 
 func handleMoveButtonClick():
@@ -50,5 +53,5 @@ func handleMoveButtonClick():
 		
 	currentAction = Actions.MOVE
 	label.text = "Move"
-	var possibleTiles = playfield.GetAllPossibleTilesToMove(Vector2i(3, 3), 2)
+	var possibleTiles = playfield.GetAllPossibleTilesToMove(playfield.GetTileWithPlayer().pos, 2)
 	playfield.SetPossibleTilesHighlightingByTilesObj(possibleTiles, true)

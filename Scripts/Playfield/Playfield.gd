@@ -1,6 +1,7 @@
 extends Node
 class_name Playfield
 
+var testingMovableEntityScene = preload("res://Scenes/Entities/MovableEntity.tscn") #TODO remove
 var tileScene = preload("res://Scenes/Playfield/Tile.tscn")
 var wallEntityScene = preload("res://Scenes/Entities/Obstacle/WallEntity.tscn")
 
@@ -22,6 +23,9 @@ func _ready():
 			add_child(tile)
 			
 			tiles[pos] = tile
+			
+	var testingMovableEntity = testingMovableEntityScene.instantiate()	#TODO remove
+	tiles[Vector2i(2, 2)].appendEntity(testingMovableEntity)
 
 func CreateWall(tile: Tile):
 	var wall: Entity = wallEntityScene.instantiate()
@@ -43,6 +47,23 @@ func GetArrayOfTilesByPos(tilesPos: Array[Vector2i]) -> Array[Tile]:
 		toReturn.append(tile)
 		
 	return toReturn
+
+func GetTileWithPlayer() -> Tile:
+	for key in tiles:
+		var tile: Tile = tiles[key]
+
+		if CheckIfTileHasPlayer(tile):
+			return tile
+			
+	printerr("Cannot find player")
+	return null
+
+func CheckIfTileHasPlayer(tile: Tile) -> bool:
+	for entity in tile.entities:
+		if entity is MovableEntity: #TODO change to player entity
+			return true
+	
+	return false
 
 func GetAllEmptyTiles() -> Array[Tile]:
 	var toReturn: Array[Tile] = []
