@@ -18,6 +18,14 @@ offset_bottom = -15.0
 scale = Vector2(0.5, 0.5)
 text = "Spawn trap"
 
+[node name="Move" type="Button" parent="CanvasLayer"]
+offset_left = -72.0
+offset_top = -26.0
+offset_right = 24.0
+offset_bottom = 5.0
+scale = Vector2(0.5, 0.5)
+text = "Move"
+
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
 offset_left = -17.0
 offset_top = -49.0
@@ -35,3 +43,4 @@ label = NodePath("../CanvasLayer/RichTextLabel")
 playfield = NodePath("../Playfield")
 
 [connection signal="pressed" from="CanvasLayer/SpawnTrap" to="TestingManager" method="handleSpawnTrapButtonClick"]
+[connection signal="pressed" from="CanvasLayer/Move" to="TestingManager" method="handleMoveButtonClick"]

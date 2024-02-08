@@ -27,12 +27,22 @@ func CreateWall(tile: Tile):
 	var wall: Entity = wallEntityScene.instantiate()
 	tile.appendEntity(wall)
 	
-func GetTileByPos(pos: Vector2) -> Tile:
+func GetTileByPos(pos: Vector2i) -> Tile:
 	if !tiles.has(pos):
 		printerr("Cannot find tile on provided position")
 		return null
 		
 	return tiles[pos]
+
+func GetArrayOfTilesByPos(tilesPos: Array[Vector2i]) -> Array[Tile]:
+	var toReturn: Array[Tile] = []
+	for tilePos in tilesPos:
+		var tile = GetTileByPos(tilePos)
+		if !tile:
+			break
+		toReturn.append(tile)
+		
+	return toReturn
 
 func GetAllEmptyTiles() -> Array[Tile]:
 	var toReturn: Array[Tile] = []
@@ -43,6 +53,31 @@ func GetAllEmptyTiles() -> Array[Tile]:
 			toReturn.append(tile)
 		
 	return toReturn
+	
+func GetAllPossibleTilesToMove(currentPos: Vector2i, maxDistance: int) -> Array[Tile]:
+	var toReturn: Array[Tile] = []
+	for i in range(1, maxDistance + 1):
+		for tilePos in [Vector2i(i, 0), Vector2i(-i, 0), Vector2i(0, i), Vector2i(0, -i)]:
+			var tile: Tile = GetTileByPos(currentPos + tilePos)
+			if tile != null && CheckIfTileIsPossibleToMoveOn(currentPos, tile):
+				toReturn.append(tile)
+		
+	return toReturn
+
+func CheckIfTileHasWall(tile: Tile) -> bool:
+	for entity in tile.entities:
+		if entity is WallEntity:
+			return true
+	
+	return false
+
+func CheckIfTileIsPossibleToMoveOn(currentPos: Vector2i, tile: Tile) -> bool:
+	var allTilesBetween2Tiles = GetArrayOfTilesByPos(Utils.CoordinatesBetween(currentPos, tile.pos))
+
+	if CheckIfTileHasWall(tile) || allTilesBetween2Tiles.filter(CheckIfTileHasWall).size() > 0:
+		return false
+	
+	return true
 
 func SetPossibleTilesHighlightingByTilesPos(tilesPos: Array[Vector2i], isActive: bool):
 	for tilePos in tilesPos:
