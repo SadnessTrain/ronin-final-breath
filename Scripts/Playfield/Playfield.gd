@@ -4,6 +4,7 @@ class_name Playfield
 var testingMovableEntityScene = preload("res://Scenes/Entities/MovableEntity.tscn") #TODO remove
 var tileScene = preload("res://Scenes/Playfield/Tile.tscn")
 var wallEntityScene = preload("res://Scenes/Entities/Obstacle/WallEntity.tscn")
+var waterObstacleScene = preload("res://Scenes/Entities/Obstacle/WaterObstacleEntity.tscn")
 
 var cellSize: Vector2i = Vector2i(18, 18)
 var size: Vector2i = Vector2i(12, 6)
@@ -29,14 +30,12 @@ func _ready():
 			
 			tile.createTile(x + y, pos, self)
 			
-			if Utils.randomInt(0, 10) >= 9:
-				CreateWall(tile)
-			
 			add_child(tile)
 			
 			tiles[pos] = tile
 
 	GenerateRiver()
+	GenerateRandomObstacles()
 
 	tiles[Vector2i(2, 2)].appendEntity(testPlayer)
 	player = testPlayer
@@ -83,8 +82,20 @@ func GenerateRiver():
 	for waterTilePos in GetAllWaterTilesPos(randomTopPosition, randomBottomPosition, 3):
 		tiles[waterTilePos].SetType("WATER")
 
-func CreateWall(tile: Tile):
-	var wall: Entity = wallEntityScene.instantiate()
+func GenerateRandomObstacles():
+	for tilePos in tiles:
+		print(tilePos)
+		if Utils.randomInt(0, 10) >= 9:
+			var tile = tiles[tilePos]
+			
+			if tile.type == "WATER":
+				CreateObstacle(tile, waterObstacleScene)
+			else:
+				CreateObstacle(tile, wallEntityScene)
+
+
+func CreateObstacle(tile: Tile, obstacleEntity: PackedScene):
+	var wall: Entity = obstacleEntity.instantiate()
 	tile.appendEntity(wall)
 	
 func GetTileByPos(pos: Vector2i) -> Tile:
