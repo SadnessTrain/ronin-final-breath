@@ -18,8 +18,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Utils="*res://Scripts/Autoload/UtilsAutoload.gd"
 GlobalSignals="*res://Autoload/GlobalSignals.gd"
+Utils="*res://Scripts/Autoload/UtilsAutoload.gd"
 
 [display]
 

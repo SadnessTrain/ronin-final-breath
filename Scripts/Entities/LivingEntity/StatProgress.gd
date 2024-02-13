@@ -18,5 +18,6 @@ func SuccessfulCheck(entity:LivingEntity, stat:LivingEntity.Stat):
 	statProgress[stat] += baseIncrease
 
 	if rng.randi_range(1,100) < statProgress[stat]:
+		print("[DEBUG]: You got more proficient in " + LivingEntity.Stat.keys()[stat])
 		entity.stats[stat] += 1
 		statProgress[stat] = 1

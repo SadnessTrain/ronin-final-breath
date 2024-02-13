@@ -18,5 +18,8 @@ enum Priority{
 	HIGH
 }
 
-func _init(type:AttackType, damage:int, priority:Priority=Priority.STANDARD, effect:Callable=func():pass):
-	pass
+func _init(type:AttackType, damage:int, priority:Priority=Priority.STANDARD, effect:Callable=func(arg):pass):
+	self.type = type
+	self.damage = damage
+	self.priority = priority
+	self.effect = effect

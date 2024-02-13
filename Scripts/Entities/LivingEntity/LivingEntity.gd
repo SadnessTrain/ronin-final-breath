@@ -26,8 +26,15 @@ var equippedWeapon : Weapon
 func _ready():
 	GlobalSignals.AttackSignal.connect(RecieveAttack)
 
-func DeclareAttack(target:Vector2, type:Attack.AttackType):
+func DeclareAttack(target:Array[Entity], type:Attack.AttackType):
 	var attack = Attack.new(type, equippedWeapon.attacks[type])
+	
+	var effects = $EffectStack.findEffects([Effect.Tags.BEFORE_DECLARE_ATTACK])
+	for effect in effects:
+		#(optionally)modifies basic attack and takes its value
+		attack = effect.effect(attack)
+	
+	GlobalSignals.AttackSignal.emit(self,target,attack)
 
 func RecieveAttack():
 	pass
