@@ -7,7 +7,7 @@ var wallEntityScene = preload("res://Scenes/Entities/Obstacle/WallEntity.tscn")
 var waterObstacleScene = preload("res://Scenes/Entities/Obstacle/WaterObstacleEntity.tscn")
 var bridgeScene = preload("res://Scenes/Entities/Obstacle/BridgeEntity.tscn")
 
-var cellSize: Vector2i = Vector2i(18, 18)
+var cellSize: Vector2i = Vector2i(16, 16)
 var size: Vector2i = Vector2i(12, 7)
 
 var tiles = {}
@@ -81,7 +81,7 @@ func GenerateRiver():
 	#var randomTopPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), 0)	
 	#var randomBottomPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), size.y - 1)
 	var randomTopPosition = Vector2i(3, 0)
-	var randomBottomPosition = Vector2i(3, size.y - 1)
+	var randomBottomPosition = Vector2i(5, size.y - 1)
 	
 	for waterTilePos in GetAllWaterTilesPos(randomTopPosition, randomBottomPosition, riverWidth):
 		tiles[waterTilePos].SetType("WATER")
