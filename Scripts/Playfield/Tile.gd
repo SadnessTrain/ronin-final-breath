@@ -9,6 +9,7 @@ var pos: Vector2i
 var entities: Array[Entity] 
 var isHovered: bool
 var lastColor: Color
+var isActive: bool
 
 func createTile(index: int, pos: Vector2i, playfield: Playfield, isObstacle = false):
 	self.index = index
@@ -41,7 +42,7 @@ func changeColor(color: Color):
 
 func _physics_process(_delta: float):
 	if isHovered && Input.is_action_just_pressed("LeftMouse"):
-		GlobalSignals.PlayfieldTileClickSignal.emit(self)
+		GlobalSignals.PlayfieldTileClickSignal.emit(self, isActive)
 
 func appendEntity(entity: Entity):
 	entity.position = Vector2.ZERO
@@ -50,10 +51,12 @@ func appendEntity(entity: Entity):
 	
 func enableTileHighlighting():
 	changeColor(Color("#2c9e32"))
+	isActive = true
 	
 func disableTileHighlighting():
 	changeColor(Color("#ffffff"))
 	lastColor = Color("#ffffff")
+	isActive = false
 	
 func CheckIfHasWall():
 	for entity in entities:

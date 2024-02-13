@@ -29,8 +29,11 @@ func handleSpawnTrapButtonClick():
 	var possibleTiles = playfield.GetAllEmptyTiles()
 	playfield.SetPossibleTilesHighlightingByTilesObj(possibleTiles, true)
 
-func handlePlayfieldTileClick(tile: Tile):
-	if currentAction == Actions.NONE || tile == null || tile.CheckIfHasWall(): 
+func handlePlayfieldTileClick(tile: Tile, isActive: bool):
+	if !isActive:
+		return
+	
+	if currentAction == Actions.NONE || tile == null: 
 		return
 		
 	if currentAction == Actions.SPAWN_TRAP:
