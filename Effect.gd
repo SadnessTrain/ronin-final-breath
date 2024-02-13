@@ -7,6 +7,7 @@ var triggerSetting : TriggerSetting
 var tags : Array[Tags] = []
 
 func effect(arg):
+func execute(arg):
 	pass
 
 enum TriggerSetting{
@@ -19,6 +20,8 @@ enum Tags{
 	START_OF_COMBAT,
 	START_OF_ROUND,
 	BEFORE_DECLARE_ATTACK,
+	AFTER_DECLARE_ATTACK,
+	BEFORE_EXECUTE_ATTACK,
 	BEFORE_RECIEVE_ATTACK,
 	BEFORE_DECLARE_DEFENCE,
 	BEFORE_FAIL_DEFENCE,
