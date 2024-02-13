@@ -6,7 +6,7 @@ var tileScene = preload("res://Scenes/Playfield/Tile.tscn")
 var wallEntityScene = preload("res://Scenes/Entities/Obstacle/WallEntity.tscn")
 
 var cellSize: Vector2i = Vector2i(18, 18)
-var size: Vector2i = Vector2i(10, 6)
+var size: Vector2i = Vector2i(12, 6)
 
 var tiles = {}
 
@@ -14,7 +14,7 @@ var player: Entity
 
 var noise = FastNoiseLite.new()
 var riverChance = 100 / 2
-var riverMargin = 2
+var riverMargin = 3
 
 func _ready(): 
 	noise.seed = Utils.randomInt(-2000000, 20000000)
@@ -41,6 +41,36 @@ func _ready():
 	tiles[Vector2i(2, 2)].appendEntity(testPlayer)
 	player = testPlayer
 
+func GetAllWaterTilesPos(startPos: Vector2i, endPos: Vector2i, width: int) -> Array:
+	var positions = []
+
+	var deltaX = abs(endPos.x - startPos.x)
+	var deltaY = abs(endPos.y - startPos.y)
+
+	var xIncrement = 1 if startPos.x < endPos.x else -1
+	var yIncrement = 1 if startPos.y < endPos.y else -1
+
+	var error = deltaX - deltaY
+
+	var currentX = startPos.x
+	var currentY = startPos.y
+
+	while currentX != endPos.x or currentY != (endPos.y + 1):
+		for i in range(-width / 2, width / 2 + 1):
+			positions.append(Vector2i(currentX + i, currentY))
+
+		var doubleError = 2 * error
+
+		if doubleError > -deltaY:
+			error -= deltaY
+			currentX += xIncrement
+
+		if doubleError < deltaX:
+			error += deltaX
+			currentY += yIncrement
+
+	return positions
+
 func GenerateRiver():
 	var hasRiver = Utils.randomInt(0, 100) <= riverChance
 	
@@ -50,8 +80,8 @@ func GenerateRiver():
 	var randomTopPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), 0)	
 	var randomBottomPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), size.y - 1)
 	
-	tiles[randomTopPosition].SetType("WATER")
-	tiles[randomBottomPosition].SetType("WATER")
+	for waterTilePos in GetAllWaterTilesPos(randomTopPosition, randomBottomPosition, 3):
+		tiles[waterTilePos].SetType("WATER")
 
 func CreateWall(tile: Tile):
 	var wall: Entity = wallEntityScene.instantiate()
