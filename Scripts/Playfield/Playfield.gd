@@ -81,7 +81,7 @@ func GenerateRiver():
 	#var randomTopPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), 0)	
 	#var randomBottomPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), size.y - 1)
 	var randomTopPosition = Vector2i(3, 0)
-	var randomBottomPosition = Vector2i(5, size.y - 1)
+	var randomBottomPosition = Vector2i(3, size.y - 1)
 	
 	for waterTilePos in GetAllWaterTilesPos(randomTopPosition, randomBottomPosition, riverWidth):
 		tiles[waterTilePos].SetType("WATER")
@@ -99,7 +99,7 @@ func GetFirstRiverTileInRow(row: int) -> int:
 	return -1
 	
 func GetLastRiverTileInRow(firstRiverTile: int) -> int:
-	return firstRiverTile + 1 + riverWidth
+	return firstRiverTile + 2 + riverWidth
 
 func GenerateBridge():
 	var yMiddle: int = floor(size.y / 2)
@@ -113,12 +113,12 @@ func GenerateBridge():
 			var dir = Vector2(0, 0)
 			if x == xMin:
 				dir.x = -1
-			elif x == xMax:
+			elif x == xMax - 1:
 				dir.x = 1
 				
 			if y == yMiddle - 1:
 				dir.y = -1
-			elif  y == yMiddle + 2:
+			elif  y == yMiddle + 2 - 1:
 				dir.y = 1
 			
 			bridgeElement.SetDirection(dir)
