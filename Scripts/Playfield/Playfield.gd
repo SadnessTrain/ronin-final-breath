@@ -37,7 +37,7 @@ func _ready():
 			tiles[pos] = tile
 
 	GenerateRiver()
-	#GenerateRandomObstacles()
+	GenerateRandomObstacles()
 
 	tiles[Vector2i(0,0)].appendEntity(testPlayer)
 	player = testPlayer
@@ -73,15 +73,13 @@ func GetAllWaterTilesPos(startPos: Vector2i, endPos: Vector2i, width: int) -> Ar
 	return positions
 
 func GenerateRiver():
-#	var hasRiver = Utils.randomInt(0, 100) <= riverChance
+	var hasRiver = Utils.randomInt(0, 100) <= riverChance
 	
-#	if !hasRiver:
-#		return
+	if !hasRiver:
+		return
 		
-	#var randomTopPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), 0)	
-	#var randomBottomPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), size.y - 1)
-	var randomTopPosition = Vector2i(3, 0)
-	var randomBottomPosition = Vector2i(5, size.y - 1)
+	var randomTopPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), 0)	
+	var randomBottomPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), size.y - 1)
 	
 	for waterTilePos in GetAllWaterTilesPos(randomTopPosition, randomBottomPosition, riverWidth):
 		tiles[waterTilePos].SetType("WATER")
