@@ -12,13 +12,21 @@ var tiles = {}
 
 var player: Entity
 
+var noise = FastNoiseLite.new()
+var riverChance = 100 / 2
+var riverMargin = 2
+
 func _ready(): 
+	noise.seed = Utils.randomInt(-2000000, 20000000)
+	noise.frequency = 0.004
+
 	var testPlayer = testingMovableEntityScene.instantiate()	#TODO remove
 	
 	for x in range(0, size.x):
 		for y in range(0, size.y):
 			var pos = Vector2i(x, y)
 			var tile: Tile = tileScene.instantiate()
+			
 			tile.createTile(x + y, pos, self)
 			
 			if Utils.randomInt(0, 10) >= 9:
@@ -28,8 +36,22 @@ func _ready():
 			
 			tiles[pos] = tile
 
+	GenerateRiver()
+
 	tiles[Vector2i(2, 2)].appendEntity(testPlayer)
 	player = testPlayer
+
+func GenerateRiver():
+	var hasRiver = Utils.randomInt(0, 100) <= riverChance
+	
+	if !hasRiver:
+		return
+		
+	var randomTopPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), 0)	
+	var randomBottomPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), size.y - 1)
+	
+	tiles[randomTopPosition].SetType("WATER")
+	tiles[randomBottomPosition].SetType("WATER")
 
 func CreateWall(tile: Tile):
 	var wall: Entity = wallEntityScene.instantiate()

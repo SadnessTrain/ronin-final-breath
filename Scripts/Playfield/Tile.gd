@@ -1,6 +1,10 @@
 extends Area2D
 class_name Tile
 
+var grassTexture: Texture2D = preload("res://Textures/Playfield/Grass.png")
+var sandTexture: Texture2D = preload("res://Textures/Playfield/Sand.png")
+var waterTexture: Texture2D = preload("res://Textures/Playfield/Water.png")
+
 @export var sprite: Sprite2D
 
 var playfield: Playfield
@@ -10,6 +14,7 @@ var entities: Array[Entity]
 var isHovered: bool
 var lastColor: Color
 var isActive: bool
+var type: String
 
 func createTile(index: int, pos: Vector2i, playfield: Playfield, isObstacle = false):
 	self.index = index
@@ -20,6 +25,34 @@ func createTile(index: int, pos: Vector2i, playfield: Playfield, isObstacle = fa
 	lastColor = Color("#ffffff")
 	setPosition()
 	subscribeSignals()
+	GenerateType()
+	SetTexture()
+
+func GetTexture() -> Texture2D:
+	match type:
+		"SAND":
+			return sandTexture
+		"GRASS":
+			return grassTexture
+		"WATER":
+			return waterTexture	
+			
+	return grassTexture
+	
+func GenerateType():
+	var noiseValue = playfield.noise.get_noise_2d(pos.x, pos.y)
+	
+	if noiseValue < 0.1:
+		type = "SAND"
+	
+	type = "GRASS"
+	
+func SetType(newType: String):
+	type = newType
+	SetTexture()
+
+func SetTexture():
+	sprite.texture = GetTexture()
 
 func setPosition():
 	global_position = Vector2(pos.x * playfield.cellSize.x, pos.y * playfield.cellSize.y)
