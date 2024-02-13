@@ -5,9 +5,10 @@ var testingMovableEntityScene = preload("res://Scenes/Entities/MovableEntity.tsc
 var tileScene = preload("res://Scenes/Playfield/Tile.tscn")
 var wallEntityScene = preload("res://Scenes/Entities/Obstacle/WallEntity.tscn")
 var waterObstacleScene = preload("res://Scenes/Entities/Obstacle/WaterObstacleEntity.tscn")
+var bridgeScene = preload("res://Scenes/Entities/Obstacle/BridgeEntity.tscn")
 
 var cellSize: Vector2i = Vector2i(18, 18)
-var size: Vector2i = Vector2i(12, 6)
+var size: Vector2i = Vector2i(12, 7)
 
 var tiles = {}
 
@@ -16,6 +17,7 @@ var player: Entity
 var noise = FastNoiseLite.new()
 var riverChance = 100 / 2
 var riverMargin = 3
+var riverWidth = 3
 
 func _ready(): 
 	noise.seed = Utils.randomInt(-2000000, 20000000)
@@ -35,9 +37,9 @@ func _ready():
 			tiles[pos] = tile
 
 	GenerateRiver()
-	GenerateRandomObstacles()
+	#GenerateRandomObstacles()
 
-	tiles[Vector2i(2, 2)].appendEntity(testPlayer)
+	tiles[Vector2i(0,0)].appendEntity(testPlayer)
 	player = testPlayer
 
 func GetAllWaterTilesPos(startPos: Vector2i, endPos: Vector2i, width: int) -> Array:
@@ -71,32 +73,71 @@ func GetAllWaterTilesPos(startPos: Vector2i, endPos: Vector2i, width: int) -> Ar
 	return positions
 
 func GenerateRiver():
-	var hasRiver = Utils.randomInt(0, 100) <= riverChance
+#	var hasRiver = Utils.randomInt(0, 100) <= riverChance
 	
-	if !hasRiver:
-		return
+#	if !hasRiver:
+#		return
 		
-	var randomTopPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), 0)	
-	var randomBottomPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), size.y - 1)
+	#var randomTopPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), 0)	
+	#var randomBottomPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), size.y - 1)
+	var randomTopPosition = Vector2i(3, 0)
+	var randomBottomPosition = Vector2i(5, size.y - 1)
 	
-	for waterTilePos in GetAllWaterTilesPos(randomTopPosition, randomBottomPosition, 3):
+	for waterTilePos in GetAllWaterTilesPos(randomTopPosition, randomBottomPosition, riverWidth):
 		tiles[waterTilePos].SetType("WATER")
+		
+	GenerateBridge()
 
+func GetFirstRiverTileInRow(row: int) -> int:
+	var lastType: String = ""
+	for i in range(0, size.x):
+		var tile: Tile = GetTileByPos(Vector2(i, row))
+		
+		if lastType != "WATER" && tile.type == "WATER":
+			return i - 1
+			
+	return -1
+	
+func GetLastRiverTileInRow(firstRiverTile: int) -> int:
+	return firstRiverTile + 1 + riverWidth
+
+func GenerateBridge():
+	var yMiddle: int = floor(size.y / 2)
+	var xMin: int = GetFirstRiverTileInRow(yMiddle)
+	var xMax: int = GetLastRiverTileInRow(xMin)
+	
+	for x in range(xMin, xMax):
+		for y in range(yMiddle - 1, yMiddle + 2):
+			var tile: Tile = GetTileByPos(Vector2(x, y))
+			var bridgeElement: BridgeEntity = bridgeScene.instantiate()
+			var dir = Vector2(0, 0)
+			if x == xMin:
+				dir.x = -1
+			elif x == xMax:
+				dir.x = 1
+				
+			if y == yMiddle - 1:
+				dir.y = -1
+			elif  y == yMiddle + 2:
+				dir.y = 1
+			
+			bridgeElement.SetDirection(dir)
+			tile.appendEntity(bridgeElement)
+			
 func GenerateRandomObstacles():
 	for tilePos in tiles:
-		print(tilePos)
 		if Utils.randomInt(0, 10) >= 9:
 			var tile = tiles[tilePos]
 			
 			if tile.type == "WATER":
-				CreateObstacle(tile, waterObstacleScene)
+				CreateEntity(tile, waterObstacleScene)
 			else:
-				CreateObstacle(tile, wallEntityScene)
+				CreateEntity(tile, wallEntityScene)
+	
 
-
-func CreateObstacle(tile: Tile, obstacleEntity: PackedScene):
-	var wall: Entity = obstacleEntity.instantiate()
-	tile.appendEntity(wall)
+func CreateEntity(tile: Tile, entity: PackedScene):
+	var newEntity: Entity = entity.instantiate()
+	tile.appendEntity(newEntity)
 	
 func GetTileByPos(pos: Vector2i) -> Tile:
 	if !tiles.has(pos):
