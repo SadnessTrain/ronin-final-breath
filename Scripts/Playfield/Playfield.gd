@@ -10,7 +10,11 @@ var size: Vector2i = Vector2i(10, 6)
 
 var tiles = {}
 
+var player: Entity
+
 func _ready(): 
+	var testPlayer = testingMovableEntityScene.instantiate()	#TODO remove
+	
 	for x in range(0, size.x):
 		for y in range(0, size.y):
 			var pos = Vector2i(x, y)
@@ -23,9 +27,9 @@ func _ready():
 			add_child(tile)
 			
 			tiles[pos] = tile
-			
-	var testingMovableEntity = testingMovableEntityScene.instantiate()	#TODO remove
-	tiles[Vector2i(2, 2)].appendEntity(testingMovableEntity)
+
+	tiles[Vector2i(2, 2)].appendEntity(testPlayer)
+	player = testPlayer
 
 func CreateWall(tile: Tile):
 	var wall: Entity = wallEntityScene.instantiate()
@@ -116,3 +120,14 @@ func DisableAllTilesHighlighting():
 	for key in tiles:
 		var tile: Tile = tiles[key]
 		tile.disableTileHighlighting()
+
+func MoveEntity(entityToMove: Entity, newTile: Tile):
+	for tileKey in tiles:
+		var tile: Tile = tiles[tileKey]
+		var findEntity = tile.entities.find(entityToMove)
+		if findEntity != -1:
+			tile.entities.remove_at(findEntity)
+			newTile.entities.push_back(entityToMove)
+			entityToMove.reparent(newTile)
+			entityToMove.position = Vector2.ZERO
+			return

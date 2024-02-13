@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/Entities/MovableEntity.gd" id="1_bcw0e"]
 [ext_resource type="Texture2D" uid="uid://cfg5y2pqiptry" path="res://Textures/MovableEntity.png" id="2_ehc5q"]
 
-[node name="Wall" type="Node2D"]
+[node name="MovableEntity" type="Node2D"]
 script = ExtResource("1_bcw0e")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
