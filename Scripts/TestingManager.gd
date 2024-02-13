@@ -44,6 +44,7 @@ func handlePlayfieldTileClick(tile: Tile, isActive: bool):
 	if currentAction == Actions.MOVE:
 		currentAction = Actions.NONE
 		label.text = "NONE"
+		playfield.MoveEntity(playfield.player, tile)
 		playfield.DisableAllTilesHighlighting()
 
 
