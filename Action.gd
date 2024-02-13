@@ -22,7 +22,6 @@ enum Actions{
 
 func Execute():
 	match(action):
-		ATTACK:
 		Actions.ATTACK:
 			GlobalSignals.AttackSignal.emit()
 	pass

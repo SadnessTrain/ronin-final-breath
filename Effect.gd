@@ -6,7 +6,6 @@ var target : LivingEntity
 var triggerSetting : TriggerSetting
 var tags : Array[Tags] = []
 
-func effect(arg):
 func execute(arg):
 	pass
 

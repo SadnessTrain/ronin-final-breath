@@ -30,12 +30,6 @@ func DeclareAttack(target:Array[Entity], type:Attack.AttackType):
 	var attack = Attack.new(type, equippedWeapon.attacks[type])
 	attack = $EffectStack.ExecuteEffects(Effect.Tags.AFTER_DECLARE_ATTACK,attack)
 	
-	var effects = $EffectStack.findEffects([Effect.Tags.BEFORE_DECLARE_ATTACK])
-	for effect in effects:
-		#(optionally)modifies basic attack and takes its value
-		attack = effect.effect(attack)
-	
-	GlobalSignals.AttackSignal.emit(self,target,attack)
 	$Combat.DeclarationQueue.append(Action.new(Action.Actions.ATTACK, self, target, attack))
 
 func RecieveAttack():
