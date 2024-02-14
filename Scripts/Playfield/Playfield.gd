@@ -3,7 +3,7 @@ class_name Playfield
 
 var testingMovableEntityScene = preload("res://Scenes/Entities/MovableEntity.tscn") #TODO remove
 var tileScene = preload("res://Scenes/Playfield/Tile.tscn")
-var wallEntityScene = preload("res://Scenes/Entities/Obstacle/WallEntity.tscn")
+var treeEntityScene = preload("res://Scenes/Entities/Obstacle/TreeEntity.tscn")
 var waterObstacleScene = preload("res://Scenes/Entities/Obstacle/WaterObstacleEntity.tscn")
 var bridgeScene = preload("res://Scenes/Entities/Obstacle/BridgeEntity.tscn")
 
@@ -134,7 +134,7 @@ func GenerateRandomObstacles():
 		if tile.type == "WATER":
 			CreateEntity(tile, waterObstacleScene)
 		else:
-			CreateEntity(tile, wallEntityScene)
+			CreateEntity(tile, treeEntityScene)
 
 func GetAllTilesWithEmptyNeighbors() -> Array[Tile]:
 	var toReturn: Array[Tile] = []
