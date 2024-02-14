@@ -119,15 +119,42 @@ func GenerateBridge():
 			tile.appendEntity(bridgeElement)
 			
 func GenerateRandomObstacles():
-	for tilePos in tiles:
-		if Utils.randomInt(0, 10) >= 9:
-			var tile = tiles[tilePos]
-			
-			if tile.type == "WATER":
-				CreateEntity(tile, waterObstacleScene)
-			else:
-				CreateEntity(tile, wallEntityScene)
+	var obstacleCount: int = Utils.randomInt(config.minObstacles, config.maxObstacles)
+
+	for i in range(0, obstacleCount):
+		var possibleTiles: Array[Tile] = GetAllTilesWithEmptyNeighbors()
+		print(possibleTiles.size())
 	
+		if possibleTiles.size() == 0:
+			return
+		
+		var randomIndex: int = Utils.randomInt(0, possibleTiles.size())
+		var tile: Tile = possibleTiles[randomIndex]
+		
+		if tile.type == "WATER":
+			CreateEntity(tile, waterObstacleScene)
+		else:
+			CreateEntity(tile, wallEntityScene)
+
+func GetAllTilesWithEmptyNeighbors() -> Array[Tile]:
+	var toReturn: Array[Tile] = []
+	
+	for x in range(0, config.size.x):
+		for y in range(0, config.size.y):
+			var tile: Tile = GetTileByPos(Vector2(x, y))
+			if !CheckIfTileHasNeighborThatIsNotEmpty(tile):
+				toReturn.push_back(tile)
+
+	return toReturn
+
+func CheckIfTileHasNeighborThatIsNotEmpty(tile: Tile) -> bool:
+	for x in range(tile.pos.x - 1, tile.pos.x + 2):
+		for y in range(tile.pos.y - 1, tile.pos.y + 2):
+			var tileToCheck: Tile = GetTileByPos(Vector2i(x, y))
+			if tileToCheck && tileToCheck.entities.size() > 0:
+				return true
+			
+	return false
 
 func CreateEntity(tile: Tile, entity: PackedScene):
 	var newEntity: Entity = entity.instantiate()

@@ -23,8 +23,6 @@ func SetDirection(direction: Vector2i):
 
 func GetTexture() -> Texture2D:
 	
-	print(direction)
-	
 	match direction:
 		Vector2i(-1, -1):
 			return bridgeLeftTopCorner

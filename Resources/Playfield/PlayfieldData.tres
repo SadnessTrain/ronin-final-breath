@@ -9,3 +9,5 @@ size = Vector2i(12, 7)
 riverChance = 50
 riverMargin = 3
 riverWidth = 3
+minObstacles = 4
+maxObstacles = 8
