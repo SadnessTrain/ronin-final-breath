@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgsoynr7igg7o"
-path="res://.godot/imported/WaterObstacle.png-12fa6531fd5003b4342868302e46adce.ctex"
+uid="uid://cl4sbbwr8uh2j"
+path="res://.godot/imported/WaterObstacle.png-2771898e96a086af8d7725aa8da4cd78.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Playfield/WaterObstacle.png"
-dest_files=["res://.godot/imported/WaterObstacle.png-12fa6531fd5003b4342868302e46adce.ctex"]
+source_file="res://Textures/Playfield/Obstacles/WaterObstacle.png"
+dest_files=["res://.godot/imported/WaterObstacle.png-2771898e96a086af8d7725aa8da4cd78.ctex"]
 
 [params]
 

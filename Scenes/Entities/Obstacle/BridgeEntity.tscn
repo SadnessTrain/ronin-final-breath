@@ -1,11 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://gutoed0m4agb"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/Obstacle/BridgeEntity.gd" id="1_hx7i4"]
-[ext_resource type="Texture2D" uid="uid://df0ostxvd6iu0" path="res://Textures/Playfield/Bridge/BridgeMiddle.png" id="2_lmm8h"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_eks23"]
+load_path = "res://.godot/imported/BridgeMiddle.png-2621b35c206769e27839bc528cb2bb20.ctex"
 
 [node name="Bridge" type="Node2D" node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_hx7i4")
 sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_lmm8h")
+texture = SubResource("CompressedTexture2D_eks23")

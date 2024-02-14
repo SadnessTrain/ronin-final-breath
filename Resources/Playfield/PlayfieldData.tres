@@ -5,9 +5,9 @@
 [resource]
 script = ExtResource("1_4ywbw")
 cellSize = Vector2i(16, 16)
-size = Vector2i(12, 7)
+size = Vector2i(14, 9)
 riverChance = 50
 riverMargin = 3
-riverWidth = 3
+riverWidth = 5
 minObstacles = 7
 maxObstacles = 12
