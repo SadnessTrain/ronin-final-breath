@@ -37,6 +37,10 @@ func _ready():
 
 	tiles[Vector2i(0,0)].appendEntity(testPlayer)
 	player = testPlayer
+	
+	for i in range(0, 4):
+		var testEntity = testingMovableEntityScene.instantiate()
+		tiles[Vector2i(Utils.randomInt(2, 7), Utils.randomInt(2, 5))].appendEntity(testEntity)
 
 func GetAllWaterTilesPos(startPos: Vector2i, endPos: Vector2i, width: int) -> Array:
 	var positions = []
@@ -162,7 +166,7 @@ func CreateEntity(tile: Tile, entity: PackedScene):
 	
 func GetTileByPos(pos: Vector2i) -> Tile:
 	if !tiles.has(pos):
-		printerr("Cannot find tile on provided position")
+		#printerr("Cannot find tile on provided position")
 		return null
 		
 	return tiles[pos]
@@ -189,7 +193,7 @@ func GetTileWithPlayer() -> Tile:
 
 func CheckIfTileHasPlayer(tile: Tile) -> bool:
 	for entity in tile.entities:
-		if entity is MovableEntity: #TODO change to player entity
+		if entity == player:
 			return true
 	
 	return false
@@ -256,3 +260,18 @@ func MoveEntity(entityToMove: Entity, newTile: Tile):
 			entityToMove.reparent(newTile)
 			entityToMove.position = Vector2.ZERO
 			return
+			
+
+func GetAllLivingEntities(incluePlayer: bool = false) -> Array[LivingEntity]:
+	var result: Array[LivingEntity] = []
+	
+	for tilePos in tiles:
+		var tile: Tile = GetTileByPos(tilePos)
+		for entity in tile.entities:
+			if entity is LivingEntity:
+				if !incluePlayer && entity == player:
+					break;
+					
+				result.push_back(entity)
+			
+	return result

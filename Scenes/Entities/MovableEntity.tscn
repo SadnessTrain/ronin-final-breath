@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://ngfh6kugjf5m"]
 
-[ext_resource type="Script" path="res://Scripts/Entities/MovableEntity.gd" id="1_bcw0e"]
+[ext_resource type="Script" path="res://Scripts/Entities/LivingEntity/LivingEntity.gd" id="1_1hevk"]
 [ext_resource type="Texture2D" uid="uid://cfg5y2pqiptry" path="res://Textures/MovableEntity.png" id="2_ehc5q"]
 
 [node name="MovableEntity" type="Node2D"]
-script = ExtResource("1_bcw0e")
+script = ExtResource("1_1hevk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_ehc5q")
