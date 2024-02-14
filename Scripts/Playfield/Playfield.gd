@@ -38,9 +38,14 @@ func _ready():
 	tiles[Vector2i(0,0)].appendEntity(testPlayer)
 	player = testPlayer
 	
+	GenerateEnemies()
+
+func GenerateEnemies():
 	for i in range(0, 4):
+		var allEmptyTiles = GetAllEmptyTiles()
 		var testEntity = testingMovableEntityScene.instantiate()
-		tiles[Vector2i(Utils.randomInt(2, 7), Utils.randomInt(2, 5))].appendEntity(testEntity)
+		var randomTileIndex: int = Utils.randomInt(0, allEmptyTiles.size())
+		allEmptyTiles[randomTileIndex].appendEntity(testEntity)
 
 func GetAllWaterTilesPos(startPos: Vector2i, endPos: Vector2i, width: int) -> Array:
 	var positions = []
@@ -203,7 +208,7 @@ func GetAllEmptyTiles() -> Array[Tile]:
 	for key in tiles:
 		var tile: Tile = tiles[key]
 
-		if tile.entities.size() <= 0:
+		if tile.entities.size() <= 0 && tile.type != "WATER":
 			toReturn.append(tile)
 		
 	return toReturn
