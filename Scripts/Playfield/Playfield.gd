@@ -7,17 +7,13 @@ var wallEntityScene = preload("res://Scenes/Entities/Obstacle/WallEntity.tscn")
 var waterObstacleScene = preload("res://Scenes/Entities/Obstacle/WaterObstacleEntity.tscn")
 var bridgeScene = preload("res://Scenes/Entities/Obstacle/BridgeEntity.tscn")
 
-var cellSize: Vector2i = Vector2i(16, 16)
-var size: Vector2i = Vector2i(12, 7)
+@export var config: PlayfieldData
 
 var tiles = {}
 
 var player: Entity
 
 var noise = FastNoiseLite.new()
-var riverChance = 100 / 2
-var riverMargin = 3
-var riverWidth = 3
 
 func _ready(): 
 	noise.seed = Utils.randomInt(-2000000, 20000000)
@@ -25,8 +21,8 @@ func _ready():
 
 	var testPlayer = testingMovableEntityScene.instantiate()	#TODO remove
 	
-	for x in range(0, size.x):
-		for y in range(0, size.y):
+	for x in range(0, config.size.x):
+		for y in range(0, config.size.y):
 			var pos = Vector2i(x, y)
 			var tile: Tile = tileScene.instantiate()
 			
@@ -73,22 +69,22 @@ func GetAllWaterTilesPos(startPos: Vector2i, endPos: Vector2i, width: int) -> Ar
 	return positions
 
 func GenerateRiver():
-	var hasRiver = Utils.randomInt(0, 100) <= riverChance
+	var hasRiver = Utils.randomInt(0, 100) <= config.riverChance
 	
 	if !hasRiver:
 		return
 		
-	var randomTopPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), 0)	
-	var randomBottomPosition = Vector2i(Utils.randomInt(riverMargin, size.x - (riverMargin + 1)), size.y - 1)
+	var randomTopPosition = Vector2i(Utils.randomInt(config.riverMargin, config.size.x - (config.riverMargin + 1)), 0)	
+	var randomBottomPosition = Vector2i(Utils.randomInt(config.riverMargin, config.size.x - (config.riverMargin + 1)), config.size.y - 1)
 	
-	for waterTilePos in GetAllWaterTilesPos(randomTopPosition, randomBottomPosition, riverWidth):
+	for waterTilePos in GetAllWaterTilesPos(randomTopPosition, randomBottomPosition, config.riverWidth):
 		tiles[waterTilePos].SetType("WATER")
 		
 	GenerateBridge()
 
 func GetFirstRiverTileInRow(row: int) -> int:
 	var lastType: String = ""
-	for i in range(0, size.x):
+	for i in range(0, config.size.x):
 		var tile: Tile = GetTileByPos(Vector2(i, row))
 		
 		if lastType != "WATER" && tile.type == "WATER":
@@ -97,10 +93,10 @@ func GetFirstRiverTileInRow(row: int) -> int:
 	return -1
 	
 func GetLastRiverTileInRow(firstRiverTile: int) -> int:
-	return firstRiverTile + 2 + riverWidth
+	return firstRiverTile + 2 + config.riverWidth
 
 func GenerateBridge():
-	var yMiddle: int = floor(size.y / 2)
+	var yMiddle: int = floor(config.size.y / 2)
 	var xMin: int = GetFirstRiverTileInRow(yMiddle)
 	var xMax: int = GetLastRiverTileInRow(xMin)
 	

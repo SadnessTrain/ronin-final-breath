@@ -55,7 +55,7 @@ func SetTexture():
 	sprite.texture = GetTexture()
 
 func setPosition():
-	global_position = Vector2(pos.x * playfield.cellSize.x, pos.y * playfield.cellSize.y)
+	global_position = Vector2(pos.x * playfield.config.cellSize.x, pos.y * playfield.config.cellSize.y)
 
 func subscribeSignals():
 	mouse_entered.connect(handleMouseEntered)

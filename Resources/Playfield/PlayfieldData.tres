@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PlayfieldData" load_steps=2 format=3 uid="uid://c3gby5w5ulgvg"]
+
+[ext_resource type="Script" path="res://Scripts/Playfield/PlayfieldData.gd" id="1_4ywbw"]
+
+[resource]
+script = ExtResource("1_4ywbw")
+cellSize = Vector2i(16, 16)
+size = Vector2i(12, 7)
+riverChance = 50
+riverMargin = 3
+riverWidth = 3
